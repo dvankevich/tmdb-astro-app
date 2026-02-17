@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Counter from "../components/Counter";
 ---
 
 <Layout title="Tailwind + Astro">
@@ -39,5 +40,7 @@ import Layout from "../layouts/Layout.astro";
             <div id="result" class="mt-6 p-8 bg-zinc-800 rounded-2xl min-h-25">
             </div>
         </div>
+
+        <Counter client:load />
     </div>
 </Layout>
