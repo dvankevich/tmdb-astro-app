@@ -25,5 +25,19 @@ import Layout from "../layouts/Layout.astro";
                 Блок 3
             </div>
         </div>
+
+        <div class="mt-16 text-center">
+            <button
+                hx-get="/api/hello"
+                hx-target="#result"
+                hx-swap="innerHTML"
+                class="bg-green-600 hover:bg-green-700 px-8 py-4 rounded-xl text-lg font-medium"
+            >
+                Завантажити через HTMX
+            </button>
+
+            <div id="result" class="mt-6 p-8 bg-zinc-800 rounded-2xl min-h-25">
+            </div>
+        </div>
     </div>
 </Layout>
