@@ -1,17 +1,37 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+import PreactTest from "../components/PreactTest.tsx";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Головна">
+  <main class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl md:text-5xl font-bold text-center mb-10">
+      Популярні фільми
+    </h1>
+
+    <!-- тестовий блок, щоб побачити, чи працює Tailwind -->
+    <div
+      class="bg-blue-600 text-white p-8 rounded-2xl shadow-2xl max-w-md mx-auto"
+    >
+      Якщо цей блок синій з відступами та закругленими кутами — Tailwind працює!
+    </div>
+    <div class="container mx-auto py-12">
+      <button
+        hx-get="/api/hello"
+        hx-target="#result"
+        hx-swap="innerHTML"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium"
+      >
+        Натисни мене (завантажить текст з сервера)
+      </button>
+
+      <div id="result" class="mt-6 p-6 bg-zinc-800 rounded-xl min-h-[100px]">
+        Тут з'явиться відповідь...
+      </div>
+    </div>
+    <section class="mt-20 py-12 text-center">
+      <h2 class="text-4xl font-bold mb-8">Preact острів працює!</h2>
+      <PreactTest client:load />
+    </section>
+  </main>
+</Layout>

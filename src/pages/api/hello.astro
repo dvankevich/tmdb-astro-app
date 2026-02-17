@@ -1,0 +1,10 @@
+---
+// src/pages/api/hello.astro
+export const prerender = false;
+---
+
+<div class="text-green-400 text-xl font-bold">
+  Привіт від HTMX + Astro! 🎉 (завантажено о {
+    new Date().toLocaleTimeString("uk-UA")
+  })
+</div>
