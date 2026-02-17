@@ -1,0 +1,17 @@
+---
+// src/layouts/Layout.astro
+import "../styles/global.css";
+
+const { title = "TMDB Movies" } = Astro.props;
+---
+
+<html lang="uk">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title}</title>
+    </head>
+    <body class="bg-zinc-950 text-white antialiased min-h-screen">
+        <slot />
+    </body>
+</html>
