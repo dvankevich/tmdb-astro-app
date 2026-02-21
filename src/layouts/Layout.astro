@@ -1,17 +1,57 @@
 ---
 // src/layouts/Layout.astro
 import "../styles/global.css";
+import { getRelativeLocaleUrl } from "astro:i18n"; // ← ОБОВ'ЯЗКОВИЙ ІМПОРТ
 
 const { title = "TMDB Movies" } = Astro.props;
+const currentLang = Astro.currentLocale ?? "uk";
+
+// Отримуємо поточний шлях без мови (щоб перемикач залишався на тій самій сторінці)
+const currentPath = Astro.url.pathname.replace(/^\/(uk|en)/, "") || "/";
 ---
 
-<html lang="uk">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-  </head>
-  <body class="bg-zinc-950 text-white antialiased min-h-screen">
-    <slot />
-  </body>
+<html lang={currentLang}>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title}</title>
+    </head>
+    <body class="bg-zinc-950 text-white antialiased min-h-screen">
+        <!-- ХЕДЕР З ПЕРЕМИКАЧЕМ -->
+        <header
+            class="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-md sticky top-0 z-50"
+        >
+            <div
+                class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between"
+            >
+                <a
+                    href={getRelativeLocaleUrl(currentLang, "/")}
+                    class="text-2xl font-bold tracking-tighter"
+                >
+                    TMDB <span class="text-blue-400">Movies</span>
+                </a>
+
+                <!-- Перемикач мови -->
+                <div
+                    class="flex items-center gap-1 bg-zinc-800 rounded-full p-1"
+                >
+                    <a
+                        href={getRelativeLocaleUrl("uk", currentPath)}
+                        class={`px-5 py-2 rounded-full text-sm font-medium transition ${currentLang === "uk" ? "bg-white text-zinc-950" : "hover:bg-zinc-700"}`}
+                    >
+                        🇺🇦 УКР
+                    </a>
+
+                    <a
+                        href={getRelativeLocaleUrl("en", currentPath)}
+                        class={`px-5 py-2 rounded-full text-sm font-medium transition ${currentLang === "en" ? "bg-white text-zinc-950" : "hover:bg-zinc-700"}`}
+                    >
+                        🇬🇧 ENG
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <slot />
+    </body>
 </html>
