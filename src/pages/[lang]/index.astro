@@ -1,13 +1,15 @@
 ---
 export const prerender = false;
 
+import { getTmdbLanguage } from "../../lib/tmdb.ts";
 import Layout from "../../layouts/Layout.astro";
 
 const lang = Astro.currentLocale ?? "uk"; // ← НОВЕ: отримуємо поточну мову
 
 const key = import.meta.env.TMDB_API_KEY;
+const tmdbLang = getTmdbLanguage(lang as "uk" | "en");
 const res = await fetch(
-    `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=uk-UA&page=1`,
+    `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=${tmdbLang}&page=1`,
 );
 const { results: movies } = await res.json();
 ---
@@ -50,7 +52,7 @@ const { results: movies } = await res.json();
         >
             Завантажити через HTMX
         </button>
-        <div id="result" class="mt-6 p-8 bg-zinc-800 rounded-2xl min-h-[100px]">
+        <div id="result" class="mt-6 p-8 bg-zinc-800 rounded-2xl min-h-25">
         </div>
     </div>
 </Layout>
