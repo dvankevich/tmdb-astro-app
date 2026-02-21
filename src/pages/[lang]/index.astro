@@ -1,0 +1,56 @@
+---
+export const prerender = false;
+
+import Layout from "../../layouts/Layout.astro";
+
+const lang = Astro.currentLocale ?? "uk"; // ← НОВЕ: отримуємо поточну мову
+
+const key = import.meta.env.TMDB_API_KEY;
+const res = await fetch(
+    `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=uk-UA&page=1`,
+);
+const { results: movies } = await res.json();
+---
+
+<Layout title="Популярні фільми">
+    <h1 class="text-4xl font-bold text-center py-12">Популярні фільми</h1>
+
+    <!-- Показуємо поточну мову для перевірки -->
+    <div class="text-center text-sm text-gray-400 mb-6">
+        Поточна мова: <span class="font-mono bg-zinc-800 px-2 py-1 rounded"
+            >{lang}</span
+        >
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 px-4">
+        {
+            movies.map((m: any) => (
+                <div class="bg-zinc-800 rounded-xl overflow-hidden">
+                    <img
+                        src={`https://image.tmdb.org/t/p/w500${m.poster_path}`}
+                        alt={m.title}
+                        class="w-full"
+                    />
+                    <div class="p-4">
+                        <h3 class="font-bold">{m.title}</h3>
+                        <p class="text-sm text-gray-400">{m.release_date}</p>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+
+    <!-- HTMX тест лишається без змін (api/hello поза [lang]) -->
+    <div class="mt-16 text-center">
+        <button
+            hx-get="/api/hello"
+            hx-target="#result"
+            hx-swap="innerHTML"
+            class="bg-green-600 hover:bg-green-700 px-8 py-4 rounded-xl text-lg font-medium"
+        >
+            Завантажити через HTMX
+        </button>
+        <div id="result" class="mt-6 p-8 bg-zinc-800 rounded-2xl min-h-[100px]">
+        </div>
+    </div>
+</Layout>

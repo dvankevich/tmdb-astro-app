@@ -3,7 +3,6 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import htmx from "astro-htmx";
 import preact from "@astrojs/preact";
-
 import netlify from "@astrojs/netlify";
 
 export default defineConfig({
@@ -14,9 +13,24 @@ export default defineConfig({
   integrations: [
     htmx(),
     preact({
-      compat: true, // важливо для signals та react-like коду
+      compat: true,
     }),
   ],
 
   adapter: netlify(),
+
+  // ==================== НОВЕ: i18n конфігурація ====================
+  i18n: {
+    // Які мови підтримуємо (порядок не важливий)
+    locales: ["en", "uk"],
+
+    // Основна мова проекту (українська)
+    defaultLocale: "uk",
+
+    // Робимо префікс для ВСІХ мов, у тому числі й для defaultLocale
+    routing: {
+      prefixDefaultLocale: true,
+    },
+  },
+  // =================================================================
 });
