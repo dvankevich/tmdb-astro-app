@@ -1,17 +1,19 @@
 // src/lib/tmdb.ts
 
 /**
- * Повертає поточну мову з URL (/uk/ або /en/)
+ * Повертає 'uk' або 'en' на основі того, що передали з .astro сторінки
  */
-export function getCurrentLocale(): "uk" | "en" {
-  // Astro.currentLocale працює тільки в .astro файлах,
-  // тому ми будемо передавати його з сторінки
-  // (поки що повертаємо 'uk' як fallback)
-  return "uk"; // тимчасово, оновимо в наступному кроці
+export function getCurrentLocale(
+  localeFromPage: string | undefined,
+): "uk" | "en" {
+  const locale = localeFromPage?.toLowerCase();
+
+  if (locale === "en") return "en";
+  return "uk"; // fallback на українську (наша defaultLocale)
 }
 
 /**
- * Перетворює 'uk' / 'en' у формат, який розуміє TMDB
+ * Перетворює 'uk' / 'en' у формат TMDB (uk-UA / en-US)
  */
 export function getTmdbLanguage(locale: "uk" | "en" = "uk"): string {
   return locale === "uk" ? "uk-UA" : "en-US";

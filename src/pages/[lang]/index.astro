@@ -1,13 +1,14 @@
 ---
 export const prerender = false;
 
-import { getTmdbLanguage } from "../../lib/tmdb.ts";
+import { getCurrentLocale, getTmdbLanguage } from "../../lib/tmdb.ts";
 import Layout from "../../layouts/Layout.astro";
 
-const lang = Astro.currentLocale ?? "uk"; // ← НОВЕ: отримуємо поточну мову
+const langFromUrl = Astro.currentLocale ?? "uk";
+const lang = getCurrentLocale(langFromUrl);
 
 const key = import.meta.env.TMDB_API_KEY;
-const tmdbLang = getTmdbLanguage(lang as "uk" | "en");
+const tmdbLang = getTmdbLanguage(lang);
 const res = await fetch(
     `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=${tmdbLang}&page=1`,
 );
@@ -21,6 +22,10 @@ const { results: movies } = await res.json();
     <div class="text-center text-sm text-gray-400 mb-6">
         Поточна мова: <span class="font-mono bg-zinc-800 px-2 py-1 rounded"
             >{lang}</span
+        >
+        <br />
+        TMDB мова: <span class="font-mono bg-zinc-800 px-2 py-1 rounded"
+            >{tmdbLang}</span
         >
     </div>
 
