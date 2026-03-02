@@ -4,6 +4,7 @@ type Translations = {
   popularMovies: string;
   currentLanguage: string;
   tmdbLanguage: string;
+  htmxLoad: string;
   // додай сюди нові ключі пізніше, наприклад searchPlaceholder: string;
 };
 
@@ -12,11 +13,13 @@ const translations: Record<"uk" | "en", Translations> = {
     popularMovies: "Популярні фільми",
     currentLanguage: "Поточна мова",
     tmdbLanguage: "TMDB мова",
+    htmxLoad: "Завантажити через HTMX",
   },
   en: {
     popularMovies: "Popular movies",
     currentLanguage: "Current language",
     tmdbLanguage: "TMDB language",
+    htmxLoad: "Load via HTMX",
   },
 };
 
