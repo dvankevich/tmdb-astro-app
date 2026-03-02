@@ -47,7 +47,7 @@ const title = t("popularMovies", lang);
 
 <div class="mt-16 text-center">
     <button
-        hx-get="/api/hello"
+        hx-get={`/api/hello?lang=${lang}`}
         hx-target="#result"
         hx-swap="innerHTML"
         class="bg-green-600 hover:bg-green-700 px-8 py-4 rounded-xl text-lg font-medium"

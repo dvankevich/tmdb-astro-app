@@ -5,6 +5,7 @@ type Translations = {
   currentLanguage: string;
   tmdbLanguage: string;
   htmxLoad: string;
+  helloFromHtmx: string;
   // додай сюди нові ключі пізніше, наприклад searchPlaceholder: string;
 };
 
@@ -14,12 +15,14 @@ const translations: Record<"uk" | "en", Translations> = {
     currentLanguage: "Поточна мова",
     tmdbLanguage: "TMDB мова",
     htmxLoad: "Завантажити через HTMX",
+    helloFromHtmx: "Привіт від HTMX",
   },
   en: {
     popularMovies: "Popular movies",
     currentLanguage: "Current language",
     tmdbLanguage: "TMDB language",
     htmxLoad: "Load via HTMX",
+    helloFromHtmx: "Hello from HTMX",
   },
 };
 
