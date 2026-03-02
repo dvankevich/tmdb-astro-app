@@ -1,26 +1,26 @@
 ---
 export const prerender = false;
 
-import { getCurrentLocale, getTmdbLanguage } from "../../lib/tmdb.ts";
 import Layout from "../../layouts/Layout.astro";
-import { t } from "../../lib/i18n";
+import { getTmdbLanguage } from "../../lib/tmdb.ts";
+import { t } from "../../lib/i18n.ts";
 
-const langFromUrl = Astro.currentLocale ?? "uk";
-const lang = getCurrentLocale(langFromUrl);
+const lang = "en";
+
+const tmdbLang = getTmdbLanguage(lang);
 
 const key = import.meta.env.TMDB_API_KEY;
-const tmdbLang = getTmdbLanguage(lang);
 const res = await fetch(
     `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=${tmdbLang}&page=1`,
 );
 const { results: movies } = await res.json();
+
 const title = t("popularMovies", lang);
 ---
 
-<Layout title={`${title} — ${lang.toUpperCase()}`}>
+<Layout title={`${title} — EN`}>
     <h1 class="text-4xl font-bold text-center py-12">{title}</h1>
 
-    <!-- Переклади для перевірки -->
     <div class="text-center text-sm text-gray-400 mb-6">
         {t("currentLanguage", lang)}: <span
             class="font-mono bg-zinc-800 px-2 py-1 rounded">{lang}</span
@@ -47,5 +47,18 @@ const title = t("popularMovies", lang);
                 </div>
             ))
         }
+    </div>
+
+    <div class="mt-16 text-center">
+        <button
+            hx-get="/api/hello"
+            hx-target="#result"
+            hx-swap="innerHTML"
+            class="bg-green-600 hover:bg-green-700 px-8 py-4 rounded-xl text-lg font-medium"
+        >
+            Завантажити через HTMX
+        </button>
+        <div id="result" class="mt-6 p-8 bg-zinc-800 rounded-2xl min-h-[100px]">
+        </div>
     </div>
 </Layout>
