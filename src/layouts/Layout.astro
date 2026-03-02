@@ -1,13 +1,13 @@
 ---
 // src/layouts/Layout.astro
 import "../styles/global.css";
-import { getRelativeLocaleUrl } from "astro:i18n"; // ← ОБОВ'ЯЗКОВИЙ ІМПОРТ
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 const { title = "TMDB Movies" } = Astro.props;
 const currentLang = Astro.currentLocale ?? "uk";
 
-// Отримуємо поточний шлях без мови (щоб перемикач залишався на тій самій сторінці)
-const currentPath = Astro.url.pathname.replace(/^\/(uk|en)/, "") || "/";
+// Поточний шлях без мови (для перемикача)
+const currentPath = Astro.url.pathname.replace(/^\/(en)/, "") || "/";
 ---
 
 <html lang={currentLang}>
@@ -17,7 +17,6 @@ const currentPath = Astro.url.pathname.replace(/^\/(uk|en)/, "") || "/";
         <title>{title}</title>
     </head>
     <body class="bg-zinc-950 text-white antialiased min-h-screen">
-        <!-- ХЕДЕР З ПЕРЕМИКАЧЕМ -->
         <header
             class="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-md sticky top-0 z-50"
         >
@@ -25,7 +24,7 @@ const currentPath = Astro.url.pathname.replace(/^\/(uk|en)/, "") || "/";
                 class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between"
             >
                 <a
-                    href={getRelativeLocaleUrl(currentLang, "/")}
+                    href={getRelativeLocaleUrl("uk", "/")}
                     class="text-2xl font-bold tracking-tighter"
                 >
                     TMDB <span class="text-blue-400">Movies</span>

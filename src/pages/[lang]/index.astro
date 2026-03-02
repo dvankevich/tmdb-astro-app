@@ -3,6 +3,7 @@ export const prerender = false;
 
 import { getCurrentLocale, getTmdbLanguage } from "../../lib/tmdb.ts";
 import Layout from "../../layouts/Layout.astro";
+import { t } from "../../lib/i18n";
 
 const langFromUrl = Astro.currentLocale ?? "uk";
 const lang = getCurrentLocale(langFromUrl);
@@ -13,19 +14,20 @@ const res = await fetch(
     `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=${tmdbLang}&page=1`,
 );
 const { results: movies } = await res.json();
+const title = t("popularMovies", lang);
 ---
 
-<Layout title="Популярні фільми">
-    <h1 class="text-4xl font-bold text-center py-12">Популярні фільми</h1>
+<Layout title={`${title} — ${lang.toUpperCase()}`}>
+    <h1 class="text-4xl font-bold text-center py-12">{title}</h1>
 
-    <!-- Показуємо поточну мову для перевірки -->
+    <!-- Переклади для перевірки -->
     <div class="text-center text-sm text-gray-400 mb-6">
-        Поточна мова: <span class="font-mono bg-zinc-800 px-2 py-1 rounded"
-            >{lang}</span
+        {t("currentLanguage", lang)}: <span
+            class="font-mono bg-zinc-800 px-2 py-1 rounded">{lang}</span
         >
         <br />
-        TMDB мова: <span class="font-mono bg-zinc-800 px-2 py-1 rounded"
-            >{tmdbLang}</span
+        {t("tmdbLanguage", lang)}: <span
+            class="font-mono bg-zinc-800 px-2 py-1 rounded">{tmdbLang}</span
         >
     </div>
 
@@ -45,19 +47,5 @@ const { results: movies } = await res.json();
                 </div>
             ))
         }
-    </div>
-
-    <!-- HTMX тест лишається без змін (api/hello поза [lang]) -->
-    <div class="mt-16 text-center">
-        <button
-            hx-get="/api/hello"
-            hx-target="#result"
-            hx-swap="innerHTML"
-            class="bg-green-600 hover:bg-green-700 px-8 py-4 rounded-xl text-lg font-medium"
-        >
-            Завантажити через HTMX
-        </button>
-        <div id="result" class="mt-6 p-8 bg-zinc-800 rounded-2xl min-h-25">
-        </div>
     </div>
 </Layout>

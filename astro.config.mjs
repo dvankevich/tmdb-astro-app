@@ -21,15 +21,11 @@ export default defineConfig({
 
   // ==================== НОВЕ: i18n конфігурація ====================
   i18n: {
-    // Які мови підтримуємо (порядок не важливий)
-    locales: ["en", "uk"],
-
-    // Основна мова проекту (українська)
     defaultLocale: "uk",
-
-    // Робимо префікс для ВСІХ мов, у тому числі й для defaultLocale
+    locales: ["uk", "en"],
     routing: {
-      prefixDefaultLocale: true,
+      prefixDefaultLocale: false, // ← зміна сюди
+      // redirectToDefaultLocale: false,   // вже не потрібно, але можна явно
     },
   },
   // =================================================================
